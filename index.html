@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+    </head>
+    <body>
+        <div>a</div>
+        <div>b</div>
+        <input class="saywhen">
+        <div>c</div>
+        <div>d</div>
+
+        <script>
+            var sayWhen = {
+                init: function(valueInput, options){
+                    console.dir(valueInput)
+                    var container = document.createElement('span')
+                    container.className = 'saywhen-container'
+                    valueInput.parentNode.insertBefore(container, valueInput)
+                    valueInput.setAttribute('type', 'hidden')
+                    container.appendChild(valueInput)
+
+
+                    var displayInput = document.createElement('input')
+                    displayInput.className = valueInput.className
+                    displayInput.className += ' saywhen-display'
+                    container.appendChild(displayInput)
+                    
+                    var popup = document.createElement('div')
+                    popup.className = "saywhen-popup"
+                    container.appendChild(popup)
+
+                    var monthSelect = document.createElement('select')
+                    monthSelect.className = 'saywhen-month'
+                    this.months.forEach(function(month){
+                        var monthOption = document.createElement('option')
+                        monthOption.setAttribute('value', month)
+                        monthOption.textContent = month
+                        monthSelect.appendChild(monthOption)
+                    })
+                    popup.appendChild(monthSelect)
+
+                    var dateSelect = document.createElement('select')
+                    dateSelect.className = 'saywhen-date'
+                    for ( var i = 1; i < 32; i++ ) {
+                        var dateOption = document.createElement('option')
+                        dateOption.setAttribute('value', i)
+                        dateOption.textContent = i
+                        dateSelect.appendChild(dateOption)
+                    }
+                    popup.appendChild(dateSelect)
+
+                    var yearSelect = document.createElement('select')
+                    yearSelect.className = 'saywhen-year'
+                    var yearMax = options.yearMax || this.defaultOptions.yearMax
+                    var yearMin = options.yearMin || this.defaultOptions.yearMin
+                    for ( var i = yearMin; i <= yearMax; i++ ) {
+                        var yearOption = document.createElement('option')
+                        yearOption.setAttribute('value', i)
+                        yearOption.textContent = i
+                        yearSelect.appendChild(yearOption)
+                    }
+                    popup.appendChild(yearSelect)
+                },
+                months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                defaultOptions: {
+                    yearMin: 2001,
+                    yearMax: (new Date()).getFullYear()
+                }
+            }
+
+            window.addEventListener('load', function(){
+                document.querySelectorAll('.saywhen').forEach(function(input){
+                    console.dir(input)
+                        sayWhen.init(input, {
+
+                        })
+                })
+
+            })
+            document.querySelectorAll('.saywhen').forEach(function(input){
+                console.log(input)
+                input.addEventListener('focus', function(event){
+                    console.log(event)
+                })
+                input.addEventListener('blur', function(event){
+                    console.log(event)
+                })
+            })
+        </script>
+    </body>
+
+</html>
